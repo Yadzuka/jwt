@@ -20,15 +20,15 @@ Content-Type: application/json
 
 ### Get secured data with token
 
-GET http://localhost:8081/v1/api/unsecured
+GET http://localhost:8081/v1/api/secured
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImV4cCI6MTcwNDI2MTIwNCwiaWF0IjoxNzA0MjYwNjA0fQ.OLV32zBAd85YhOTJdNHK6GRSfQ7S-XI3uCheYoA05Jo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJleHAiOjE3MDQyNjM5NjYsImlhdCI6MTcwNDI2MzM2Nn0.EdUO1bRKzJKHwhxS0SBtdt7zxWCGztkKCGZlRs6atoQ
 
 ### Try get admin data by simple user
 
 GET http://localhost:8081/v1/api/admin
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImV4cCI6MTcwNDI2MTIwNCwiaWF0IjoxNzA0MjYwNjA0fQ.OLV32zBAd85YhOTJdNHK6GRSfQ7S-XI3uCheYoA05Jo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJleHAiOjE3MDQyNjM5NjYsImlhdCI6MTcwNDI2MzM2Nn0.EdUO1bRKzJKHwhxS0SBtdt7zxWCGztkKCGZlRs6atoQ
 
 ### Login by admin
 
@@ -45,3 +45,21 @@ Content-Type: application/json
 GET http://localhost:8081/v1/api/admin
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIlJPTEVfQURNSU4iXSwiZXhwIjoxNzA0MjYxMzk2LCJpYXQiOjE3MDQyNjA3OTZ9.hD0mx2L98gzkhzmU5mC4HgM6qs2aZEvP26nnuFhgGBo
+
+### Create new user
+
+POST http://localhost:8081/v1/api/registration
+Content-Type: application/json
+
+{
+  "username" : "user1",
+  "password" : "123",
+  "confirmPassword" : "123",
+  "email" : "user1@mail.ru"
+}
+
+### Get user info (name)
+
+GET http://localhost:8081/v1/api/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTEiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiZXhwIjoxNzA0MjY0NjI4LCJpYXQiOjE3MDQyNjQwMjh9.0m9c-to5dfaTZhQgMhShayanDrJcVROWxg46oRCYW5s
