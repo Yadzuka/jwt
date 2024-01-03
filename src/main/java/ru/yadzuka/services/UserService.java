@@ -1,17 +1,21 @@
 package ru.yadzuka.services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.yadzuka.dtos.RegistrationDto;
+import ru.yadzuka.entities.Role;
 import ru.yadzuka.entities.User;
-import ru.yadzuka.repositories.RoleRepository;
 import ru.yadzuka.repositories.UserRepository;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -19,7 +23,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
+    @Lazy
+    @Setter
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public Optional<User> getByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -28,7 +36,7 @@ public class UserService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = getByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        var user = getByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
@@ -39,8 +47,13 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void createUser(User user) {
-        user.setRoles(List.of(roleRepository.findByName("ROLE_USER").get()));
+    public User createUser(RegistrationDto registrationDto) {
+        var user = new User();
+        user.setUsername(registrationDto.getUsername());
+        user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
+        user.setEmail(registrationDto.getEmail());
+        user.setRoles(roleService.getRolesByName(Role.Names.ROLE_USER));
         userRepository.save(user);
+        return user;
     }
 }

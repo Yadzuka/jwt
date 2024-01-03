@@ -10,27 +10,27 @@ import java.security.Principal;
 @RequestMapping("/v1/api")
 public class Controller {
 
-    @GetMapping("")
+    @GetMapping("/")
     public String alive() {
         return "Alive!";
     }
 
-    @GetMapping("unsecured")
+    @GetMapping("/unsecured")
     public String unsecured() {
-        return "Alive!";
+        return "Unsecured path!";
     }
 
-    @GetMapping("secured")
+    @GetMapping("/secured")
     public String secured() {
-        return "Alive!";
+        return "Secured path!";
     }
 
-    @GetMapping("admin")
+    @GetMapping("/admin")
     public String admin() {
-        return "Alive!";
+        return "Admin path!";
     }
 
-    @GetMapping("me")
+    @GetMapping("/me")
     public String getUserName(Principal principal) {
         return principal.getName();
     }

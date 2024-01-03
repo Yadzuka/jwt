@@ -25,13 +25,13 @@ public class JwtTokenUtils {
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        List<String> roles = userDetails.getAuthorities().stream()
+        var roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
         claims.put("roles", roles);
 
-        Date issueDate = new Date();
-        Date expDate = new Date(issueDate.getTime() + lifetime.toMillis());
+        var issueDate = new Date();
+        var expDate = new Date(issueDate.getTime() + lifetime.toMillis());
 
         return Jwts.builder()
                 .setClaims(claims)
