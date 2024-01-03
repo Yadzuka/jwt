@@ -1,0 +1,47 @@
+### Get unsecured data
+
+GET http://localhost:8081/v1/api/unsecured
+Content-Type: application/json
+
+### Try get secured data
+
+GET http://localhost:8081/v1/api/secured
+Content-Type: application/json
+
+### Login by user
+
+POST http://localhost:8081/v1/api/token
+Content-Type: application/json
+
+{
+  "username" : "user",
+  "password" : "100"
+}
+
+### Get secured data with token
+
+GET http://localhost:8081/v1/api/unsecured
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImV4cCI6MTcwNDI2MTIwNCwiaWF0IjoxNzA0MjYwNjA0fQ.OLV32zBAd85YhOTJdNHK6GRSfQ7S-XI3uCheYoA05Jo
+
+### Try get admin data by simple user
+
+GET http://localhost:8081/v1/api/admin
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImV4cCI6MTcwNDI2MTIwNCwiaWF0IjoxNzA0MjYwNjA0fQ.OLV32zBAd85YhOTJdNHK6GRSfQ7S-XI3uCheYoA05Jo
+
+### Login by admin
+
+POST http://localhost:8081/v1/api/token
+Content-Type: application/json
+
+{
+  "username" : "admin",
+  "password" : "110"
+}
+
+### Try get admin data by simple user
+
+GET http://localhost:8081/v1/api/admin
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIlJPTEVfQURNSU4iXSwiZXhwIjoxNzA0MjYxMzk2LCJpYXQiOjE3MDQyNjA3OTZ9.hD0mx2L98gzkhzmU5mC4HgM6qs2aZEvP26nnuFhgGBo
