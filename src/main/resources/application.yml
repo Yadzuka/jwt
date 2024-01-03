@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+jwt:
+  secret: 123523faf
+  lifetime: 10m
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 0
+    url: jdbc:postgresql://localhost:5432/test
+  jpa:
+    show-sql: true
