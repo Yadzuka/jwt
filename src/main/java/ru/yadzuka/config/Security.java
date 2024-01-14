@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ru.yadzuka.entities.Role;
 import ru.yadzuka.services.UserService;
 
 @EnableWebSecurity
@@ -29,14 +30,15 @@ public class Security {
                 .cors().disable()
                 .authorizeRequests()
                 .antMatchers("/v1/api/secured").authenticated()
-                .antMatchers("/v1/api/admin").hasRole("ADMIN")
+                .antMatchers("/v1/api/admin").hasRole(Role.Names.ROLE_ADMIN.name())
                 .antMatchers("/v1/api/unsecured").permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                .and().addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .and()
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 
